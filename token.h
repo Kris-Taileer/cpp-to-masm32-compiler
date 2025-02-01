@@ -4,7 +4,7 @@
 
 using namespace std;
 
-enum class token_type { //types of tokens in code, gonna write later //DONE!!!
+enum class token_type { //DONE!!!
     IDENTIFIER,
     INTEGER_CONST,
     DOUBLE_CONST,
@@ -20,7 +20,8 @@ enum class token_type { //types of tokens in code, gonna write later //DONE!!!
     CHAR,
     VOID,
     AUTO,
-    //FLOAT,
+    STRUCT,
+    //  FLOAT, //coming soon!
     //LONG,
 
     LBRA, // {
@@ -66,8 +67,8 @@ enum class token_type { //types of tokens in code, gonna write later //DONE!!!
     FUNCTION,
     RETURN,
 
-    SEMICOLON,
-    COLON,              // 69
+    SEMICOLON,        // 69
+    COLON,
     COMMA,
     POINT,
     QUESTION,
@@ -78,6 +79,8 @@ enum class token_type { //types of tokens in code, gonna write later //DONE!!!
     DELETE,
     PREPROCESSOR_DIRECTIVE,
     ACCESS_OPERATOR,
+    //FORTRAN,
+    ASM
 
 };
 
@@ -87,275 +90,284 @@ private:
     token_type type;
 
 public:
-    token(const string& lexeme) {
-        this ->lexeme = lexeme;
-        this ->type = whar_token_type(lexeme);
+    token(const string& _lexeme) {
+        this ->lexeme = _lexeme;
+        this ->type = whar_token_type(_lexeme);
     }
 
     void print() {
-        cout << lexeme << " type:" << token_type_to_str(type) << "\n"; //(int) == turn into int
+        cout << lexeme << " type:" << token_type_to_str(type) << "\n";
     }
+public:
 
-    token_type whar_token_type(const string& lexeme) { //fuck this shit //yandere dev code be like:
+    token_type whar_token_type(const string& _lexeme) { //fuck this shit //yandere dev code be like:
 
-        if (lexeme == "int") {
+        if (_lexeme == "int") {
             return token_type::INT;
         }
 
-        if (lexeme == "const") {
+        if (_lexeme == "struct") {
+            return token_type::STRUCT;
+        }
+
+        if (_lexeme == "const") {
             return token_type::CONST;
         }
 
-        if (lexeme == "(") {
+        if (_lexeme == "(") {
             return token_type::LPAR;
         }
 
-        if (lexeme == ")") {
+        if (_lexeme == ")") {
             return token_type::RPAR;
         }
 
-        if (lexeme == "[") {
+        if (_lexeme == "[") {
             return token_type::LSQR;
         }
 
-        if (lexeme == "]") {
+        if (_lexeme == "]") {
             return token_type::RSQR;
         }
 
-        if (lexeme == "{") {
+        if (_lexeme == "{") {
             return token_type::LBRA;
         }
 
-        if (lexeme == "}") {
+        if (_lexeme == "}") {
             return token_type::LBRA;
         }
 
-        if (lexeme == "double") {
+        if (_lexeme == "double") {
             return token_type::DOUBLE;
         }
 
-        if (lexeme == "bool") {
+        if (_lexeme == "bool") {
             return token_type::BOOL;
         }
 
-        if (lexeme == "void") {
+        if (_lexeme == "void") {
             return token_type::VOID;
         }
 
-        if (lexeme == "char") {
+        if (_lexeme == "char") {
             return token_type::CHAR;
         }
 
-        if (lexeme == "auto") {
+        if (_lexeme == "auto") {
             return token_type::AUTO;
         }
 
-        if (lexeme == "for") {
+        if (_lexeme == "for") {
             return token_type::FOR;
         }
 
-        if (lexeme == "while") {
+        if (_lexeme == "while") {
             return token_type::WHILE;
         }
 
-        if (lexeme == "do") {
+        if (_lexeme == "do") {
             return token_type::DO_WHILE;
         }
 
-        if (lexeme == "break") {
+        if (_lexeme == "break") {
             return token_type::BREAK;
         }
 
-        if (lexeme == "continue") {
+        if (_lexeme == "continue") {
             return token_type::CONTINUE;
         }
 
-        if (lexeme == "if") {
+        if (_lexeme == "if") {
             return token_type::IF;
         }
 
-        if (lexeme == "else") {
+        if (_lexeme == "else") {
             return token_type::ELSE;
         }
 
-        if (lexeme == ">") {
+        if (_lexeme == ">") {
             return token_type::GREATER;
         }
 
-        if (lexeme == "<") {
+        if (_lexeme == "<") {
             return token_type::LESS;
         }
 
-        if (lexeme == "<=") {
+        if (_lexeme == "<=") {
             return token_type::LESS_EQUAL;
         }
 
-        if (lexeme == ">=") {
+        if (_lexeme == ">=") {
             return token_type::GREATER_EQUAL;
         }
 
-        if (lexeme == "==") {
+        if (_lexeme == "==") {
             return token_type::EQUAL;
         }
 
-        if (lexeme == "!=") {
+        if (_lexeme == "!=") {
             return token_type::NOT_EQUAL;
         }
 
-        if (lexeme == "&&") {
+        if (_lexeme == "&&") {
             return token_type::AND;
         }
 
-        if (lexeme == "||") {
+        if (_lexeme == "||") {
             return token_type::OR;
         }
 
-        if (lexeme == "!") {
+        if (_lexeme == "!") {
             return token_type::EXCLAMATION;
         }
 
-        if (lexeme == "+") {
+        if (_lexeme == "+") {
             return token_type::PLUS;
         }
 
-        if (lexeme == "-") {
+        if (_lexeme == "-") {
             return token_type::MINUS;
         }
 
-        if (lexeme == "*") {
+        if (_lexeme == "*") {
             return token_type::STAR;
         }
 
-        if (lexeme == "/") {
+        if (_lexeme == "/") {
             return token_type::SLASH;
         }
 
-        if (lexeme == "++") {
+        if (_lexeme == "++") {
             return token_type::INC;
         }
 
-        if (lexeme == "--") {
+        if (_lexeme == "--") {
             return token_type::DEC;
         }
 
-        if (lexeme == "=") {
+        if (_lexeme == "=") {
             return token_type::ASSIGN;
         }
 
-        if (lexeme == "+=") {
+        if (_lexeme == "+=") {
             return token_type::ADD_ASSIGN;
         }
 
-        if (lexeme == "-=") {
+        if (_lexeme == "-=") {
             return token_type::SUB_ASSIGN;
         }
 
-        if (lexeme == "*=") {
+        if (_lexeme == "*=") {
             return token_type::MUL_ASSIGN;
         }
 
-        if (lexeme == "/=") {
+        if (_lexeme == "/=") {
             return token_type::DIV_ASSIGN;
         }
 
-        if (lexeme == "return") {
+        if (_lexeme == "return") {
             return token_type::RETURN;
         }
 
-        if (lexeme == "new") {
+        if (_lexeme == "new") {
             return token_type::NEW;
         }
 
-        if (lexeme == "delete") {
+        if (_lexeme == "delete") {
             return token_type::DELETE;
         }
 
-        if (lexeme == "true") {
+        if (_lexeme == "true") {
             return token_type::TRUE;
         }
 
-        if (lexeme == "false") {
+        if (_lexeme == "false") {
             return token_type::FALSE;
         }
 
-        if (lexeme == "switch") {
+        if (_lexeme == "switch") {
             return token_type::SWITCH;
         }
 
-        if (lexeme == "case") {
+        if (_lexeme == "case") {
             return token_type::CASE;
         }
 
-        if (lexeme == "default") {
+        if (_lexeme == "default") {
             return token_type::DEFAULT;
         }
 
-        if (lexeme == ";") {
+        if (_lexeme == ";") {
             return token_type::SEMICOLON;
         }
 
-        if (lexeme == ":") {
+        if (_lexeme == ":") {
             return token_type::COLON;
         }
 
-        if (lexeme == ",") {
+        if (_lexeme == ",") {
             return token_type::COMMA;
         }
 
-        if (lexeme == ".") {
+        if (_lexeme == ".") {
             return token_type::POINT;
         }
 
-        if (lexeme == "?") {
+        if (_lexeme == "?") {
             return token_type::QUESTION;
         }
 
-        if (lexeme == "::") {
+        if (_lexeme == "::") {
             return token_type::ACCESS_OPERATOR;
         }
 
-        if (lexeme == "&") {
+        if (_lexeme == "&") {
             return token_type::AMPERSAND;
         }
 
-        if (lexeme == "//") {
+        if (_lexeme == "//") {
             return token_type::LINE_COMMENT;
         }
 
-        if (lexeme[0] == '#') {
-            return token_type::PREPROCESSOR_DIRECTIVE;
+        if (_lexeme[0] == '#') {
+            return token_type::PREPROCESSOR_DIRECTIVE; //all directives at once
         }
 
-        if (is_integer(lexeme)) {
+        if (is_integer(_lexeme)) {
             return token_type::INTEGER_CONST;
         }
 
-        if (is_double(lexeme)) {
+        if (is_double(_lexeme)) {
             return token_type::DOUBLE_CONST;
         }
 
-        if (is_string(lexeme)) {
+        if (is_string(_lexeme)) {
             return token_type::STRING_CONST;
         }
 
-        if (is_char(lexeme)) {
+        if (is_char(_lexeme)) {
             return token_type::CHAR_CONST;
+        }
+
+        if (_lexeme == "__asm__") {
+            return token_type::ASM;
         }
 
         return token_type :: IDENTIFIER;
         //DONE!!!
     }
 
-    bool is_string(const string& lexeme) {
-        return lexeme.front() == '"' && lexeme.back() == '"';
+    bool is_string(const string& _lexeme) {
+        return _lexeme.front() == '"' && _lexeme.back() == '"';
     }
 
-    bool is_char(const string& lexeme) {
-        return lexeme.front() == '\'' && lexeme.back() == '\''; //GOD BLESS C!!
+    bool is_char(const string& _lexeme) {
+        return _lexeme.front() == '\'' && _lexeme.back() == '\''; //GOD BLESS C!!
     }
 
-    bool is_integer(const string& lexeme) {
-        for (const char i: lexeme) {
+    bool is_integer(const string& _lexeme) {
+        for (const char i: _lexeme) {
             if ((i < '0') || (i > '9')) {
                 return false;
             }
@@ -363,9 +375,9 @@ public:
         }
         return true;
     }
-    bool is_double(const string& lexeme) {
+    bool is_double(const string& _lexeme) {
         bool point = false;
-        for (const char i: lexeme)
+        for (const char i: _lexeme)
         {
             if (i == '.' && !point)
             {
@@ -511,6 +523,10 @@ public:
             return "preprocessor directive";
         case token_type::ACCESS_OPERATOR:
             return "access operator";
+        case token_type::STRUCT:
+            return "struct";
+        case token_type::ASM:
+            return "extension";
 
         default:
             return "";
@@ -519,9 +535,9 @@ public:
 
     }
 
-    //bool is_long(const string& lexeme) {
-        //for (int i = 0; i < lexeme.size(); ++i) {
-            //if ((lexeme[i] < '0') || (lexeme[i] > '9') && (( ? < 2147483647)||( ? > -2147483647))) {
+    //bool is_long(const string& _lexeme) {
+        //for (int i = 0; i < _lexeme.size(); ++i) {
+            //if ((_lexeme[i] < '0') || (_lexeme[i] > '9') && (( ? < 2147483647)||( ? > -2147483647))) {
                 //return false;
             //}
             //return true;
